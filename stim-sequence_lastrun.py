@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.5),
-    on Thu Feb  9 12:36:20 2023
+    on Fri Mar 17 10:01:14 2023
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -29,6 +29,7 @@ import sys  # to get file system encoding
 
 import psychopy.iohub as io
 from psychopy.hardware import keyboard
+import serial
 
 
 
@@ -56,7 +57,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='/Users/joshuaighalo/Documents/codespace/stimulus-design/malawi_study/stim-sequence_lastrun.py',
+    originPath='/Users/joshuaighalo/Documents/codespace/stimulus-design/sequence_mac/stim-sequence_lastrun.py',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -110,6 +111,18 @@ welcometext = visual.TextStim(win=win, name='welcometext',
 sounds = sound.Sound('A', secs=-1, stereo=True, hamming=True,
     name='sounds')
 sounds.setVolume(1.0)
+# Create serial object for Component "serialPort"
+serialPort = serial.Serial(
+    port='COM3',
+    baudrate=9600,
+    bytesize=8,
+    parity=None,
+    stopbits=1,
+    timeout=None,
+)
+serialPort.status = NOT_STARTED
+if not serialPort.is_open:
+    serialPort.open()
 
 # --- Initialize components for Routine "blank" ---
 text_2 = visual.TextStim(win=win, name='text_2',
@@ -124,6 +137,18 @@ text_2 = visual.TextStim(win=win, name='text_2',
 sounds = sound.Sound('A', secs=-1, stereo=True, hamming=True,
     name='sounds')
 sounds.setVolume(1.0)
+# Create serial object for Component "serialPort"
+serialPort = serial.Serial(
+    port='COM3',
+    baudrate=9600,
+    bytesize=8,
+    parity=None,
+    stopbits=1,
+    timeout=None,
+)
+serialPort.status = NOT_STARTED
+if not serialPort.is_open:
+    serialPort.open()
 
 # --- Initialize components for Routine "blank" ---
 text_2 = visual.TextStim(win=win, name='text_2',
@@ -138,6 +163,18 @@ text_2 = visual.TextStim(win=win, name='text_2',
 sounds = sound.Sound('A', secs=-1, stereo=True, hamming=True,
     name='sounds')
 sounds.setVolume(1.0)
+# Create serial object for Component "serialPort"
+serialPort = serial.Serial(
+    port='COM3',
+    baudrate=9600,
+    bytesize=8,
+    parity=None,
+    stopbits=1,
+    timeout=None,
+)
+serialPort.status = NOT_STARTED
+if not serialPort.is_open:
+    serialPort.open()
 
 # --- Initialize components for Routine "goodbyescreen" ---
 text = visual.TextStim(win=win, name='text',
@@ -253,7 +290,7 @@ for thisTrial in trials:
     sounds.setSound(stims, secs=3, hamming=True)
     sounds.setVolume(1.0, log=False)
     # keep track of which components have finished
-    trialComponents = [sounds]
+    trialComponents = [sounds, serialPort]
     for thisComponent in trialComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -292,6 +329,25 @@ for thisTrial in trials:
                 # add timestamp to datafile
                 thisExp.timestampOnFlip(win, 'sounds.stopped')
                 sounds.stop()
+        if serialPort.status == NOT_STARTED and t >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            serialPort.frameNStart = frameN  # exact frame index
+            serialPort.tStart = t  # local t and not account for scr refresh
+            serialPort.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(serialPort, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.addData('serialPort.started', t)
+            serialPort.write(bytes('1', 'utf8'))
+            serialPort.status = STARTED
+        if serialPort.status == STARTED:
+            if bool(1.0):
+                # keep track of stop time/frame for later
+                serialPort.tStop = t  # not accounting for scr refresh
+                serialPort.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.addData('serialPort.stopped', t)
+                serialPort.write(bytes('0', 'utf8'))
+                serialPort.status = FINISHED
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -427,7 +483,7 @@ for thisTrial_2 in trials_2:
     sounds.setSound(stims, secs=3, hamming=True)
     sounds.setVolume(1.0, log=False)
     # keep track of which components have finished
-    trialComponents = [sounds]
+    trialComponents = [sounds, serialPort]
     for thisComponent in trialComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -466,6 +522,25 @@ for thisTrial_2 in trials_2:
                 # add timestamp to datafile
                 thisExp.timestampOnFlip(win, 'sounds.stopped')
                 sounds.stop()
+        if serialPort.status == NOT_STARTED and t >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            serialPort.frameNStart = frameN  # exact frame index
+            serialPort.tStart = t  # local t and not account for scr refresh
+            serialPort.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(serialPort, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.addData('serialPort.started', t)
+            serialPort.write(bytes('1', 'utf8'))
+            serialPort.status = STARTED
+        if serialPort.status == STARTED:
+            if bool(1.0):
+                # keep track of stop time/frame for later
+                serialPort.tStop = t  # not accounting for scr refresh
+                serialPort.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.addData('serialPort.stopped', t)
+                serialPort.write(bytes('0', 'utf8'))
+                serialPort.status = FINISHED
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -601,7 +676,7 @@ for thisTrial_3 in trials_3:
     sounds.setSound(stims, secs=3, hamming=True)
     sounds.setVolume(1.0, log=False)
     # keep track of which components have finished
-    trialComponents = [sounds]
+    trialComponents = [sounds, serialPort]
     for thisComponent in trialComponents:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -640,6 +715,25 @@ for thisTrial_3 in trials_3:
                 # add timestamp to datafile
                 thisExp.timestampOnFlip(win, 'sounds.stopped')
                 sounds.stop()
+        if serialPort.status == NOT_STARTED and t >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            serialPort.frameNStart = frameN  # exact frame index
+            serialPort.tStart = t  # local t and not account for scr refresh
+            serialPort.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(serialPort, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.addData('serialPort.started', t)
+            serialPort.write(bytes('1', 'utf8'))
+            serialPort.status = STARTED
+        if serialPort.status == STARTED:
+            if bool(1.0):
+                # keep track of stop time/frame for later
+                serialPort.tStop = t  # not accounting for scr refresh
+                serialPort.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.addData('serialPort.stopped', t)
+                serialPort.write(bytes('0', 'utf8'))
+                serialPort.status = FINISHED
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -748,6 +842,15 @@ if routineForceEnded:
     routineTimer.reset()
 else:
     routineTimer.addTime(-1.500000)
+# Close serialPort
+if serialPort.is_open:
+    serialPort.close()
+# Close serialPort
+if serialPort.is_open:
+    serialPort.close()
+# Close serialPort
+if serialPort.is_open:
+    serialPort.close()
 
 # --- End experiment ---
 # Flip one final time so any remaining win.callOnFlip() 
